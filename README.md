@@ -16,32 +16,32 @@ A web app for running a pizza store. Customers can browse the menu or build a cu
 
 ---
 
-## 📌 Project Objective
+## 🎯 Project Objective
 
 Help a pizza store take orders for dine-in and home delivery. Customers can create an account, customize a pizza with a live preview, pay online or with cash, and follow their order status. Staff can manage fulfillment, track payment status, update ingredient stock, and receive low-stock email alerts.
 
 ---
 
-## ✨ Feature Highlights
+## 🍕 Feature Highlights
 
-### 🧑‍💻 Customer Experience
+### 🍽️ Customer Experience
 | Feature | Description |
 |---|---|
 | 🔐 Secure Auth | JWT-based login and registration, bcrypt password hashing, and email verification and password reset flows |
 | 🍕 Pizza Builder | Step-by-step customizer — base, sauce, cheese, veggies, and meat toppings |
-| 🖼️ Live Preview Canvas | Layered transparent PNG overlays with fade-in animations for a food-photography feel |
-| 🏪 Eat in shop | Check out with a name and mobile number. Orders have no delivery fee and progress through **Ready to serve** and **Served**. |
+| 👀 Live Preview Canvas | Layered transparent PNG overlays with fade-in animations for a food-photography feel |
+| 🍽️ Eat in shop | Check out with a name and mobile number. Orders have no delivery fee and progress through **Ready to serve** and **Served**. |
 | 🚚 Home Delivery | Check out with a delivery address. Delivery costs ₹49 below a ₹999 subtotal and is free from ₹999. |
 | 💳 Payments | Razorpay online payments with signature verification in test mode, cash at the shop, and cash on delivery |
-| 📦 My Orders | Track order and payment status, reorder past purchases, and cancel eligible orders |
+| 🧾 My Orders | Track order and payment status, reorder past purchases, and cancel eligible orders |
 
-### 🛠️ Admin Panel
+### 🏪 Admin Panel
 | Feature | Description |
 |---|---|
 | 📊 Dashboard | Revenue, total and pending orders, recent orders, low-stock totals, and a seven-day order activity chart |
-| 📋 Inventory Control | Manage ingredient prices and quantities for bases, sauces, cheeses, vegetables, and meats in table or grid view. Search, sort, and filter low-stock items. Checkout checks and deducts the required stock. |
-| 🔄 Order Management | Search and filter orders by status and date, see customer phone numbers and order type, and update order status. Cash payments are marked paid when the order is delivered or served. |
-| 📧 Email Alerts | Restock notifications when ingredient stock is below the configured threshold (20 by default) and email is configured |
+| 🧀 Inventory Control | Manage ingredient prices and quantities for bases, sauces, cheeses, vegetables, and meats in table or grid view. Search, sort, and filter low-stock items. Checkout checks and deducts the required stock. |
+| 📋 Order Management | Search and filter orders by status and date, see customer phone numbers and order type, and update order status. Cash payments are marked paid when the order is delivered or served. |
+| 🔔 Email Alerts | Restock notifications when ingredient stock is below the configured threshold (20 by default) and email is configured |
 
 ---
 
@@ -185,13 +185,13 @@ From the repository root, run `cd frontend && npm run build` to build the fronte
 
 ## 📸 Application Walkthrough
 
-### Custom Pizza Builder
+### 👨‍🍳 Custom Pizza Builder
 The builder walks users through a step-by-step ingredient selection flow. Each choice instantly updates a layered preview canvas — transparent PNG overlays are composited in real time to show crust thickness, sauce color, melted cheese, and stacked toppings with fade-in animations.
 
-### Checkout & Payments
+### 💳 Checkout & Payments
 Customers choose eat-in or home delivery at checkout. The backend computes prices and checks ingredient availability for both types. For online payment, it creates a Razorpay test order and verifies the payment before confirming the order. For cash, it records the order as payment pending and marks it paid when staff mark the order Delivered or Served. Checkout deducts ingredient stock and can send a low-stock email alert.
 
-### Admin Dashboard
+### 📊 Admin Dashboard
 The dashboard shows order activity, recent orders, revenue, and low-stock totals. Staff can then open Admin Orders to update fulfillment status or Inventory Management to edit ingredient details and adjust stock.
 
 ---
