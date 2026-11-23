@@ -52,7 +52,7 @@ const Navbar = () => {
         </Link>
 
         {/* Center nav links */}
-        <ul className={`nav-links ${menuOpen ? 'open' : ''}`}>
+        <ul id="main-nav-links" className={`nav-links ${menuOpen ? 'open' : ''}`}>
           {isAdmin ? (
             <>
               <li><Link to="/admin" className={isActive('/admin') ? 'active' : ''} onClick={() => setMenuOpen(false)}>Dashboard</Link></li>
@@ -66,6 +66,12 @@ const Navbar = () => {
               <li><Link to="/my-orders" className={isActive('/my-orders') ? 'active' : ''} onClick={() => setMenuOpen(false)}>My Orders</Link></li>
             </>
           )}
+          <li className="nav-mobile-logout">
+            <button type="button" className="dropdown-item dropdown-logout" onClick={handleLogout}>
+              <LogOut size={18} aria-hidden="true" />
+              <span>Log out</span>
+            </button>
+          </li>
         </ul>
 
         {/* Right side controls */}
@@ -121,7 +127,7 @@ const Navbar = () => {
           </div>
 
           {/* Hamburger */}
-          <button className="nav-hamburger" onClick={() => setMenuOpen(!menuOpen)} aria-label={menuOpen ? 'Close menu' : 'Open menu'} aria-expanded={menuOpen}>
+          <button className="nav-hamburger" onClick={() => setMenuOpen(!menuOpen)} aria-label={menuOpen ? 'Close menu' : 'Open menu'} aria-expanded={menuOpen} aria-controls="main-nav-links">
             {menuOpen ? <X size={20} aria-hidden="true" /> : <Menu size={20} aria-hidden="true" />}
           </button>
         </div>

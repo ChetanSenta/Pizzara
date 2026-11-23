@@ -369,6 +369,35 @@
 
 @media (max-width: 640px) {
   .admin-dash h1 { font-size: var(--fs-2xl); }
-  .admin-stats { grid-template-columns: 1fr; }
-  .stat-value { font-size: var(--fs-2xl); }
+  .admin-stats {
+    gap: var(--space-3);
+    margin-block: var(--space-4) var(--space-6);
+  }
+
+  .stat-card {
+    min-height: 116px;
+    padding: var(--space-3);
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: var(--space-1);
+    border-radius: var(--radius-lg);
+    text-align: left;
+  }
+
+  .stat-icon {
+    width: 36px;
+    height: 36px;
+    margin: 0 0 var(--space-1);
+  }
+
+  .stat-icon svg { width: 20px; height: 20px; }
+
+  .stat-value {
+    font-size: var(--fs-xl);
+    line-height: var(--lh-number);
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .stat-label { font-size: 0.6875rem; }
 }

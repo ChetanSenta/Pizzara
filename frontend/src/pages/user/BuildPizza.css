@@ -693,3 +693,18 @@ html[data-theme="light"] .selection-count {
 .progress-step.done .progress-step-num {
   color: var(--color-bg);
 }
+
+@media (width < 520px) {
+  .builder-layout-grid { grid-template-columns: minmax(0, 1fr); }
+
+  .step-nav:not(.step-nav-review) > .step-next-hint {
+    order: -1;
+    flex-basis: 100%;
+  }
+
+  .step-nav .step-next { min-width: min(100%, 128px); }
+}
+
+@media (height < 500px) and (width < 900px) {
+  .builder-action-bar { position: static; }
+}

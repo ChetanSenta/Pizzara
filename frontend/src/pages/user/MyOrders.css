@@ -450,3 +450,14 @@ html[data-theme="light"] .badge-cancelled {
 html[data-theme="light"] .cancelled-row {
   color: color-mix(in srgb, var(--error) 55%, var(--text-primary));
 }
+
+@media (width <= 380px) {
+  .order-card.cancelled .order-actions {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .order-card.cancelled .order-actions > * {
+    width: 100%;
+  }
+}
