@@ -1,223 +1,72 @@
-<div align="center">
+# Pizzara — Pizza Store Ordering & Management
 
-# 🍕 Pizzara — Full-Stack Pizza Delivery Application
+Pizzara is a web app for running a pizza store. Customers can order from the menu or build a custom pizza, then choose **Eat in shop** or **Home delivery**. Store staff use the admin dashboard to manage orders and ingredient stock in one place.
 
-**OIBSIP Web Development & Designing | Level 3 – Final Task**
+## Customer ordering
 
-[![MERN Stack](https://img.shields.io/badge/Stack-MERN-61DAFB?style=for-the-badge&logo=react&logoColor=white)](https://github.com/ChetanSenta/OIBSIP_Web_Development_Designing_Pizzara)
-[![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
-[![Node.js](https://img.shields.io/badge/Node.js-18+-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
-[![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
-[![Razorpay](https://img.shields.io/badge/Razorpay-Test_Mode-02042B?style=for-the-badge&logo=razorpay&logoColor=white)](https://razorpay.com/)
+- **Menu and custom pizzas** — Browse the menu, filter vegetarian and non-vegetarian pizzas, sort by price, or choose your own base, sauce, cheese, and toppings with a live preview.
+- **Eat in shop** — Check out with a name and mobile number. There is no delivery fee. Customers can track the order through **Ready to serve** and **Served**.
+- **Home delivery** — Enter a delivery address at checkout and track the order through delivery. The delivery fee is ₹49 below a ₹999 subtotal and free from ₹999.
+- **Payment options** — Pay online with Razorpay in test mode, pay cash at the shop, or choose cash on delivery.
+- **My Orders** — View order history, track status, reorder a past purchase, or cancel an eligible order.
 
-A production-grade pizza ordering platform featuring a **photo-realistic custom pizza builder**, JWT-secured authentication, Razorpay payment processing, and a full administrative control panel with automated low-stock email alerts.
+## Store operations
 
-</div>
+- **Dashboard** — Review order activity, recent orders, revenue, and low-stock totals.
+- **Order management** — Filter orders, see the payment method and fulfillment type, update order status, and find customer phone numbers.
+- **Ingredient inventory** — Manage quantities and prices for bases, sauces, cheeses, vegetables, and meats. Checkout checks and deducts stock, and the admin can filter for ingredients with fewer than 20 units.
+- **Notifications** — Send low-stock alerts when email is configured.
 
----
+## Tech stack
 
-## 📌 Project Objective
+| Area | Tools |
+| --- | --- |
+| Frontend | React 19, Vite, React Router, Axios, Lucide, CSS |
+| Backend | Node.js, Express, MongoDB, Mongoose |
+| Authentication and email | JWT, bcryptjs, Nodemailer |
+| Online payments | Razorpay test mode |
 
-Build an end-to-end web application that lets users register securely, customize a pizza with real-time visual feedback, complete payments through a test gateway, and track their order through every stage of delivery. On the admin side, the platform automates inventory deduction, order lifecycle management, and low-stock email notifications.
+## Run locally
 
----
-
-## ✨ Feature Highlights
-
-### 🧑‍💻 Customer Experience
-| Feature | Description |
-|---|---|
-| 🔐 Secure Auth | JWT-based login/register with bcrypt hashing and email verification gating |
-| 🍕 Pizza Builder | Step-by-step customizer — base, sauce, cheese, veggies, and meat toppings |
-| 🖼️ Live Preview Canvas | Layered transparent PNG overlays with fade-in animations for a food-photography feel |
-| 💳 Razorpay Payments | End-to-end order creation, payment, and signature verification (test mode) |
-| 📦 Order Tracking | Real-time status updates: Placed → Received → Kitchen → Out for Delivery → Delivered |
-
-### 🛠️ Admin Panel
-| Feature | Description |
-|---|---|
-| 📊 Dashboard | Revenue counters, total orders, and at-a-glance business metrics |
-| 📋 Inventory Control | Manage bases, sauces, cheeses, vegetables, and meat stock quantities |
-| 🔄 Order Management | Filterable order list with inline status selectors |
-| 📧 Email Alerts | Automatic restock notifications when any ingredient drops below the safety threshold |
-
----
-
-## 🛠️ Tech Stack
-
-### Frontend
-- **Vite + React 19** — Fast, modular UI with hot module replacement
-- **React Router v7** — Declarative client-side routing with `ProtectedRoute` and `AdminRoute` guards
-- **Axios** — Promise-based HTTP client for all API interactions
-- **React Toastify** — Non-blocking toast notification system
-- **Vanilla CSS** — Custom responsive styling with glassmorphism aesthetics and keyframe animations
-
-### Backend
-- **Node.js + Express.js** — RESTful API server
-- **MongoDB + Mongoose ODM** — Schema design for `User`, `Order`, and `Inventory` collections
-- **JWT + bcryptjs** — Token-based session management and secure password hashing
-- **Nodemailer** — SMTP transactional email for verification and admin stock alerts
-
-### Payment Gateway
-- **Razorpay SDK (Test Mode)** — Order creation, payment simulation, and HMAC signature verification
-
----
-
-## 🗂️ Project Structure
-
-```
-OIBSIP_Web_Development_Designing_Pizzara/
-├── frontend/               # Vite + React 19 client
-│   ├── src/
-│   │   ├── components/     # Reusable UI components
-│   │   ├── pages/          # Route-level page views
-│   │   ├── context/        # Auth & cart context providers
-│   │   └── assets/         # Static assets
-│   └── package.json
-├── backend/                # Node.js + Express API server
-│   ├── models/             # Mongoose schemas (User, Order, Inventory)
-│   ├── routes/             # Auth, order, inventory, admin routes
-│   ├── middleware/         # JWT auth & role-check middleware
-│   ├── utils/              # Nodemailer & Razorpay helpers
-│   ├── seed.js             # DB seed script
-│   └── package.json
-├── .gitignore
-└── README.md
-```
-
----
-
-## 🚀 Getting Started
-
-### Frontend environment
-
-Copy the example environment file before starting the client:
+Use Node.js 20.19+ on the 20.x line, or 22.12+, and a running MongoDB instance.
 
 ```bash
-cd frontend
+git clone https://github.com/ChetanSenta/Pizzara.git
+cd Pizzara/backend
+npm ci
 cp .env.example .env
 ```
 
-Set `VITE_API_URL` and `VITE_RAZORPAY_KEY_ID` in `.env`.
-
-### Prerequisites
-- Node.js 18+
-- MongoDB (local instance or MongoDB Atlas)
-- Razorpay account (test mode keys)
-- SMTP credentials (e.g. [Ethereal Email](https://ethereal.email/) for local testing)
-
----
-
-### 1. Clone the Repository
-
-```bash
-git clone https://github.com/ChetanSenta/OIBSIP_Web_Development_Designing_Pizzara.git
-cd OIBSIP_Web_Development_Designing_Pizzara
-```
-
----
-
-### 2. Backend Setup
-
-```bash
-cd backend
-npm install
-```
-
-Create a `.env` file inside the `backend/` directory:
-
-```env
-PORT=5000
-MONGO_URI=mongodb://localhost:27017/pizza-delivery
-JWT_SECRET=your-secret-jwt-key
-
-# Razorpay (test mode)
-RAZORPAY_KEY_ID=rzp_test_your_razorpay_key_id
-RAZORPAY_KEY_SECRET=your_razorpay_key_secret
-
-# SMTP (Ethereal for local dev)
-EMAIL_HOST=smtp.ethereal.email
-EMAIL_PORT=587
-EMAIL_USER=your_ethereal_user
-EMAIL_PASS=your_ethereal_password
-
-ADMIN_EMAIL=admin@pizzara.com
-CLIENT_URL=http://localhost:5173
-STOCK_THRESHOLD=20
-```
-
-Seed the database with default inventory and an admin account:
-
-```bash
-node seed.js
-```
-
-Start the development server:
+Set `MONGO_URI` and a unique `JWT_SECRET` in `backend/.env`. Set the Razorpay test keys to test online payment and configure email credentials to test email delivery. Cash checkout works without Razorpay keys.
 
 ```bash
 npm run dev
 ```
 
-> API runs at **http://localhost:5000**
+The API defaults to `http://localhost:5001`. On first run, it seeds inventory and creates a local demo admin. Replace the default demo credentials before exposing the API to other users.
 
----
-
-### 3. Frontend Setup
+In a second terminal, from the repository root:
 
 ```bash
-cd ../frontend
-npm install
+cd frontend
+npm ci
+cp .env.example .env
 npm run dev
 ```
 
-> App runs at **http://localhost:5173**
+The app defaults to `http://localhost:5173`. If you use a different backend address, update `VITE_API_URL` in `frontend/.env`. Set `VITE_RAZORPAY_KEY_ID` to the same test key ID used by the backend for online checkout.
 
----
+## Build and test
 
-### 🔑 Default Seed Credentials
+Run these commands from the repository root after installing dependencies:
 
-| Role | Email | Password |
-|---|---|---|
-| Admin | `admin@pizzara.com` | `admin@123` |
+```bash
+(cd frontend && npm run build)
+node --test backend/test/*.test.js
+```
 
-> ⚠️ Change these credentials before deploying to production.
+## Acknowledgements
 
----
+The original version was developed for the [Oasis Infobyte](https://oasisinfobyte.com/) Web Development & Designing internship.
 
-## 📸 Application Walkthrough
-
-### Custom Pizza Builder
-The builder walks users through a step-by-step ingredient selection flow. Each choice instantly updates a layered preview canvas — transparent PNG overlays are composited in real time to show crust thickness, sauce color, melted cheese, and stacked toppings with fade-in animations.
-
-### Checkout & Payments
-On checkout, the backend creates a Razorpay order and returns credentials to the frontend. After the user completes payment, the backend verifies the HMAC signature, persists the order, and atomically decrements ingredient stock. If any item falls below `STOCK_THRESHOLD`, an alert email is fired immediately.
-
-### Admin Dashboard
-Admins see live order counts, total revenue, and per-ingredient stock levels in one view. Order statuses can be updated inline; inventory quantities can be edited directly with changes reflected immediately.
-
----
-
-## 📚 Key Engineering Concepts Practiced
-
-- Full-stack MERN application architecture
-- REST API design with role-based access control
-- JWT authentication flow with email verification
-- NoSQL schema design and data seeding
-- Payment gateway integration and HMAC signature verification
-- Automated background processes (stock threshold monitoring)
-- Component-level state management in React 19
-- Responsive design with CSS custom properties and animations
-
----
-
-## 🙏 Acknowledgements
-
-Developed as **Level 3 – Final Task** for the **Web Development & Designing** domain internship at **[Oasis Infobyte (OIBSIP)](https://oasisinfobyte.com/)**.
-
----
-
-<div align="center">
-
-Made with by [Chetan Senta](https://github.com/ChetanSenta)
-
-</div>
+Built by [Chetan Senta](https://github.com/ChetanSenta).
