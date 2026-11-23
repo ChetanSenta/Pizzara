@@ -16,36 +16,36 @@ A web app for running a pizza store. Customers can browse the menu or build a cu
 
 ---
 
-## 🎯 Project Objective
+## <img src="docs/icons/target.svg" width="24" height="24" alt=""> Project Objective
 
 Help a pizza store take orders for dine-in and home delivery. Customers can create an account, customize a pizza with a live preview, pay online or with cash, and follow their order status. Staff can manage fulfillment, track payment status, update ingredient stock, and receive low-stock email alerts.
 
 ---
 
-## 🍕 Feature Highlights
+## <img src="frontend/public/pizzara-logo.svg" width="24" height="24" alt=""> Feature Highlights
 
-### 🍽️ Customer Experience
+### <img src="docs/icons/utensils.svg" width="20" height="20" alt=""> Customer Experience
 | Feature | Description |
 |---|---|
-| 🔐 Secure Auth | JWT-based login and registration, bcrypt password hashing, and email verification and password reset flows |
-| 🍕 Pizza Builder | Step-by-step customizer — base, sauce, cheese, veggies, and meat toppings |
-| 👀 Live Preview Canvas | Layered transparent PNG overlays with fade-in animations for a food-photography feel |
-| 🍽️ Eat in shop | Check out with a name and mobile number. Orders have no delivery fee and progress through **Ready to serve** and **Served**. |
-| 🚚 Home Delivery | Check out with a delivery address. Delivery costs ₹49 below a ₹999 subtotal and is free from ₹999. |
-| 💳 Payments | Razorpay online payments with signature verification in test mode, cash at the shop, and cash on delivery |
-| 🧾 My Orders | Track order and payment status, reorder past purchases, and cancel eligible orders |
+| <img src="docs/icons/lock.svg" width="16" height="16" alt=""> Secure Auth | JWT-based login and registration, bcrypt password hashing, and email verification and password reset flows |
+| <img src="frontend/public/pizzara-logo.svg" width="16" height="16" alt=""> Pizza Builder | Step-by-step customizer — base, sauce, cheese, veggies, and meat toppings |
+| <img src="docs/icons/eye.svg" width="16" height="16" alt=""> Live Preview Canvas | Layered transparent PNG overlays with fade-in animations for a food-photography feel |
+| <img src="docs/icons/utensils.svg" width="16" height="16" alt=""> Eat in shop | Check out with a name and mobile number. Orders have no delivery fee and progress through **Ready to serve** and **Served**. |
+| <img src="docs/icons/truck.svg" width="16" height="16" alt=""> Home Delivery | Check out with a delivery address. Delivery costs ₹49 below a ₹999 subtotal and is free from ₹999. |
+| <img src="docs/icons/credit-card.svg" width="16" height="16" alt=""> Payments | Razorpay online payments with signature verification in test mode, cash at the shop, and cash on delivery |
+| <img src="docs/icons/receipt.svg" width="16" height="16" alt=""> My Orders | Track order and payment status, reorder past purchases, and cancel eligible orders |
 
-### 🏪 Admin Panel
+### <img src="docs/icons/store.svg" width="20" height="20" alt=""> Admin Panel
 | Feature | Description |
 |---|---|
-| 📊 Dashboard | Revenue, total and pending orders, recent orders, low-stock totals, and a seven-day order activity chart |
-| 🧀 Inventory Control | Manage ingredient prices and quantities for bases, sauces, cheeses, vegetables, and meats in table or grid view. Search, sort, and filter low-stock items. Checkout checks and deducts the required stock. |
-| 📋 Order Management | Search and filter orders by status and date, see customer phone numbers and order type, and update order status. Cash payments are marked paid when the order is delivered or served. |
-| 🔔 Email Alerts | Restock notifications when ingredient stock is below the configured threshold (20 by default) and email is configured |
+| <img src="docs/icons/chart.svg" width="16" height="16" alt=""> Dashboard | Revenue, total and pending orders, recent orders, low-stock totals, and a seven-day order activity chart |
+| <img src="docs/icons/package.svg" width="16" height="16" alt=""> Inventory Control | Manage ingredient prices and quantities for bases, sauces, cheeses, vegetables, and meats in table or grid view. Search, sort, and filter low-stock items. Checkout checks and deducts the required stock. |
+| <img src="docs/icons/shopping-bag.svg" width="16" height="16" alt=""> Order Management | Search and filter orders by status and date, see customer phone numbers and order type, and update order status. Cash payments are marked paid when the order is delivered or served. |
+| <img src="docs/icons/mail.svg" width="16" height="16" alt=""> Email Alerts | Restock notifications when ingredient stock is below the configured threshold (20 by default) and email is configured |
 
 ---
 
-## 🛠️ Tech Stack
+## <img src="docs/icons/layers.svg" width="24" height="24" alt=""> Tech Stack
 
 ### Frontend
 - **Vite + React 19** — Fast, modular UI with hot module replacement
@@ -65,7 +65,7 @@ Help a pizza store take orders for dine-in and home delivery. Customers can crea
 
 ---
 
-## 🗂️ Project Structure
+## <img src="docs/icons/folder-tree.svg" width="24" height="24" alt=""> Project Structure
 
 ```
 Pizzara/
@@ -90,7 +90,7 @@ Pizzara/
 
 ---
 
-## 🚀 Getting Started
+## <img src="docs/icons/zap.svg" width="24" height="24" alt=""> Getting Started
 
 ### Frontend environment
 
@@ -173,30 +173,30 @@ From the repository root, run `cd frontend && npm run build` to build the fronte
 
 ---
 
-### 🔑 Default Seed Credentials
+### <img src="docs/icons/key.svg" width="20" height="20" alt=""> Default Seed Credentials
 
 | Role | Email | Password |
 |---|---|---|
 | Admin | `admin@pizzara.com` | `admin@123` |
 
-> ⚠️ Change these credentials before deploying to production.
+> <img src="docs/icons/alert.svg" width="16" height="16" alt=""> Change these credentials before deploying to production.
 
 ---
 
-## 📸 Application Walkthrough
+## <img src="docs/icons/list.svg" width="24" height="24" alt=""> Application Walkthrough
 
-### 👨‍🍳 Custom Pizza Builder
+### <img src="docs/icons/chef-hat.svg" width="20" height="20" alt=""> Custom Pizza Builder
 The builder walks users through a step-by-step ingredient selection flow. Each choice instantly updates a layered preview canvas — transparent PNG overlays are composited in real time to show crust thickness, sauce color, melted cheese, and stacked toppings with fade-in animations.
 
-### 💳 Checkout & Payments
+### <img src="docs/icons/credit-card.svg" width="20" height="20" alt=""> Checkout & Payments
 Customers choose eat-in or home delivery at checkout. The backend computes prices and checks ingredient availability for both types. For online payment, it creates a Razorpay test order and verifies the payment before confirming the order. For cash, it records the order as payment pending and marks it paid when staff mark the order Delivered or Served. Checkout deducts ingredient stock and can send a low-stock email alert.
 
-### 📊 Admin Dashboard
+### <img src="docs/icons/chart.svg" width="20" height="20" alt=""> Admin Dashboard
 The dashboard shows order activity, recent orders, revenue, and low-stock totals. Staff can then open Admin Orders to update fulfillment status or Inventory Management to edit ingredient details and adjust stock.
 
 ---
 
-## 📚 Key Engineering Concepts Practiced
+## <img src="docs/icons/book.svg" width="24" height="24" alt=""> Key Engineering Concepts Practiced
 
 - Full-stack MERN application architecture
 - REST API design with role-based access control
@@ -209,7 +209,7 @@ The dashboard shows order activity, recent orders, revenue, and low-stock totals
 
 ---
 
-## 🙏 Acknowledgements
+## <img src="docs/icons/heart.svg" width="24" height="24" alt=""> Acknowledgements
 
 Developed as **Level 3 – Final Task** for the **Web Development & Designing** domain internship at **[Oasis Infobyte (OIBSIP)](https://oasisinfobyte.com/)**.
 
