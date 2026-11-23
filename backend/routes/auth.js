@@ -6,6 +6,13 @@ const User = require('../models/User');
 const sendEmail = require('../utils/sendEmail');
 const auth = require('../middleware/auth');
 
+const isStrongPassword = (password) =>
+  typeof password === 'string' &&
+  password.length >= 8 &&
+  /[A-Z]/.test(password) &&
+  /[a-z]/.test(password) &&
+  /\d/.test(password);
+
 // Generate JWT
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE || '7d' });
@@ -16,6 +23,12 @@ const generateToken = (id) => {
 router.post('/register', async (req, res) => {
   try {
     const { name, email, password } = req.body;
+    if (typeof name !== 'string' || name.trim().length < 2) {
+      return res.status(400).json({ message: 'Name must be at least 2 characters.' });
+    }
+    if (!isStrongPassword(password)) {
+      return res.status(400).json({ message: 'Password must be at least 8 characters and include uppercase, lowercase, and a number.' });
+    }
 
     // Check if user exists
     const existingUser = await User.findOne({ email });
@@ -192,6 +205,9 @@ router.post('/reset-password/:token', async (req, res) => {
   try {
     const { token } = req.params;
     const { password } = req.body;
+    if (!isStrongPassword(password)) {
+      return res.status(400).json({ message: 'Password must be at least 8 characters and include uppercase, lowercase, and a number.' });
+    }
 
     const user = await User.findOne({
       resetPasswordToken: token,

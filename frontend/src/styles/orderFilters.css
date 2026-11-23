@@ -1,0 +1,83 @@
+.order-filter-btn {
+  font: inherit;
+  font-variant-numeric: inherit;
+}
+
+.orders-filter {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  margin: 0;
+  height: var(--control-h);
+  padding: 4px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  flex: 0 0 auto;
+  width: fit-content;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.orders-filter::-webkit-scrollbar {
+  display: none;
+}
+
+.order-filter-btn {
+  flex: 0 0 auto;
+  height: var(--control-h-sm);
+  padding: 6px 12px;
+  border-radius: var(--radius-xl);
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--t);
+  white-space: nowrap;
+}
+
+.order-filter-btn:hover {
+  color: var(--primary);
+}
+
+.order-filter-btn.active {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: var(--color-bg);
+  box-shadow: 0 4px 14px var(--primary-glow);
+}
+
+.order-filter-btn:focus-visible {
+  outline-offset: -2px;
+}
+
+@media (width >= 1100px) {
+  .orders-filter {
+    max-width: calc(100% - 402px);
+  }
+}
+
+@media (width < 1100px) {
+  .orders-filter {
+    flex-basis: 100%;
+    width: 100%;
+  }
+}
+
+@media (width < 768px) {
+  .orders-filter {
+    padding-inline-end: 30px;
+    scroll-padding-inline: 4px 30px;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
+    -webkit-mask-image: linear-gradient(to right, #000 0, #000 calc(100% - 26px), transparent 100%);
+    mask-image: linear-gradient(to right, #000 0, #000 calc(100% - 26px), transparent 100%);
+  }
+
+  .order-filter-btn {
+    scroll-snap-align: start;
+  }
+}

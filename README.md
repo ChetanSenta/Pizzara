@@ -89,6 +89,17 @@ OIBSIP_Web_Development_Designing_Pizzara/
 
 ## 🚀 Getting Started
 
+### Frontend environment
+
+Copy the example environment file before starting the client:
+
+```bash
+cd frontend
+cp .env.example .env
+```
+
+Set `VITE_API_URL` and `VITE_RAZORPAY_KEY_ID` in `.env`.
+
 ### Prerequisites
 - Node.js 18+
 - MongoDB (local instance or MongoDB Atlas)

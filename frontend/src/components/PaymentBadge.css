@@ -1,0 +1,29 @@
+.order-badge-group {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-width: 0;
+}
+
+.payment-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 28px;
+  padding: 0 10px;
+  border-radius: var(--radius-pill);
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  white-space: nowrap;
+  color: var(--payment-accent);
+  background: color-mix(in srgb, var(--payment-accent) 12%, transparent);
+}
+
+.payment-paid { --payment-accent: var(--success); }
+.payment-pending { --payment-accent: var(--primary); }
+.payment-neutral { --payment-accent: var(--text-secondary); }
+
+html[data-theme="light"] .payment-badge {
+  color: color-mix(in srgb, var(--payment-accent) 45%, var(--text-primary));
+}

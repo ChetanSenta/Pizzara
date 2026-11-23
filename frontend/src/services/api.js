@@ -44,13 +44,17 @@ export const getVeggies = () => API.get('/pizza/veggies');
 export const getMeats = () => API.get('/pizza/meats');
 
 // Orders
-export const getMyOrders = () => API.get('/orders/my-orders');
-export const getAllOrders = () => API.get('/orders');
+export const getMyOrders = (params = {}) => API.get('/orders/my-orders', { params });
+export const getAllOrders = (params = {}) => API.get('/orders', { params });
+export const getAdminOrderSummary = (params) => API.get('/orders/summary', { params });
 export const updateOrderStatus = (id, status) => API.put(`/orders/${id}/status`, { status });
+export const cancelOrder = (id) => API.post(`/orders/${id}/cancel`);
 
 // Payment
-export const createPaymentOrder = (amount) => API.post('/payment/create-order', { amount });
+export const createPaymentOrder = (data) => API.post('/payment/create-order', data);
+export const quoteCheckout = (items) => createPaymentOrder({ items, quoteOnly: true });
 export const verifyPayment = (data) => API.post('/payment/verify', data);
+export const placeCodOrder = (data) => API.post('/payment/cod', data);
 
 // Inventory
 export const getInventory = () => API.get('/inventory');

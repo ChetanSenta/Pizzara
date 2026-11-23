@@ -4,6 +4,8 @@ const Inventory = require('../models/Inventory');
 const auth = require('../middleware/auth');
 const adminMiddleware = require('../middleware/admin');
 
+const allowedCategories = ['base', 'sauce', 'cheese', 'veggie', 'meat'];
+
 // @route   GET /api/inventory
 // @desc    Get all inventory items (admin)
 router.get('/', auth, adminMiddleware, async (req, res) => {
@@ -20,6 +22,18 @@ router.get('/', auth, adminMiddleware, async (req, res) => {
 router.post('/', auth, adminMiddleware, async (req, res) => {
   try {
     const { category, name, quantity, price, image } = req.body;
+    if (!allowedCategories.includes(category)) {
+      return res.status(400).json({ message: 'Invalid inventory category.' });
+    }
+    if (typeof name !== 'string' || !name.trim()) {
+      return res.status(400).json({ message: 'Item name is required.' });
+    }
+    if (!Number.isFinite(Number(quantity)) || Number(quantity) < 0) {
+      return res.status(400).json({ message: 'Quantity must be zero or greater.' });
+    }
+    if (!Number.isFinite(Number(price)) || Number(price) < 0) {
+      return res.status(400).json({ message: 'Price must be zero or greater.' });
+    }
 
     const existing = await Inventory.findOne({ category, name });
     if (existing) {
@@ -38,6 +52,15 @@ router.post('/', auth, adminMiddleware, async (req, res) => {
 router.put('/:id', auth, adminMiddleware, async (req, res) => {
   try {
     const { name, quantity, price, image } = req.body;
+    if (typeof name !== 'string' || !name.trim()) {
+      return res.status(400).json({ message: 'Item name is required.' });
+    }
+    if (!Number.isFinite(Number(quantity)) || Number(quantity) < 0) {
+      return res.status(400).json({ message: 'Quantity must be zero or greater.' });
+    }
+    if (!Number.isFinite(Number(price)) || Number(price) < 0) {
+      return res.status(400).json({ message: 'Price must be zero or greater.' });
+    }
 
     const item = await Inventory.findByIdAndUpdate(
       req.params.id,

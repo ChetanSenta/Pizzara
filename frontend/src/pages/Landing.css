@@ -1,0 +1,118 @@
+.landing-page { min-height: 100vh; background: var(--bg); overflow: hidden; }
+.landing-nav { max-width: 1200px; margin: 0 auto; height: 84px; padding: 0 24px; display:flex; align-items:center; justify-content:space-between; }
+.landing-brand { display:flex; align-items:center; gap:10px; color:var(--text-primary); font-size: var(--fs-xl); font-weight:800; }
+.landing-brand span { font-size: var(--fs-2xl); }
+.landing-actions { display:flex; gap:10px; }
+.landing-hero { max-width:1200px; min-height:calc(100vh - 84px); margin:0 auto; padding:48px 24px 72px; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); align-items:center; gap:48px; }
+.landing-eyebrow { display:inline-block; margin-bottom:18px; color:var(--primary); font-size: var(--fs-xs); font-weight:800; text-transform:uppercase;  }
+.landing-copy h1 { font-size: var(--fs-4xl); line-height: var(--lh-heading);  margin-bottom:24px; }
+.landing-copy h1 span { color:var(--primary); }
+.landing-copy p { max-width:520px; color:var(--text-secondary); font-size: var(--fs-lg); line-height: var(--lh-body); margin-bottom:32px; }
+.landing-cta { display:flex; gap:12px; flex-wrap:wrap; }
+.landing-showcase { height:560px; border:1px solid var(--border); border-radius:32px; background:radial-gradient(circle at 50% 50%,rgba(249,115,22,.22),transparent 44%),var(--bg-card); position:relative; display:grid; place-items:center; }
+.landing-pizza { width:min(78%,520px); height:auto; aspect-ratio:1; object-fit:cover; border-radius:50%; filter:drop-shadow(0 32px 40px rgba(0,0,0,.35)); animation:floatPizza 4s ease-in-out infinite; }
+.landing-float { position:absolute; background:var(--bg-surface); border:1px solid var(--border); border-radius:14px; padding:12px 16px; font-size: var(--fs-sm); font-weight:700; box-shadow:var(--shadow-md); }
+.landing-float-one { top:18%; left:8%; }
+.landing-float-two { right:7%; bottom:18%; }
+@keyframes floatPizza { 0%,100%{transform:translateY(0) rotate(-2deg)} 50%{transform:translateY(-12px) rotate(2deg)} }
+@media(max-width:800px){ .landing-hero{grid-template-columns:1fr;text-align:center}.landing-copy p{margin-inline:auto}.landing-cta{justify-content:center}.landing-showcase{height:380px}.landing-nav{height:72px}.landing-actions .btn-secondary{display:none} }
+
+.landing-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 72px 24px;
+}
+.landing-section-heading { text-align: center; margin-bottom: 32px; }
+.landing-section-heading span,
+.landing-final-cta span {
+  color: var(--primary);
+  font-size: var(--fs-xs);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.landing-three-grid,
+.landing-pizza-grid,
+.landing-benefits {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.landing-section.landing-benefits {
+  padding-top: var(--space-6);
+}
+.landing-info-card,
+.landing-pizza-card,
+.landing-benefits article {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 24px;
+  transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+}
+.landing-info-card:hover,
+.landing-pizza-card:hover,
+.landing-benefits article:hover {
+  transform: translateY(-6px);
+  border-color: rgba(238,125,58,.35);
+  box-shadow: var(--shadow-primary);
+}
+.landing-info-card > span {
+  color: var(--primary);
+  font-size: var(--fs-xl);
+  font-weight: 800;
+}
+.landing-info-card h3,
+.landing-benefits h3 { margin: 16px 0 8px; }
+.landing-info-card p,
+.landing-benefits p { color: var(--text-secondary); line-height: var(--lh-body); }
+.landing-pizza-card { padding: 12px; }
+.landing-pizza-card img { width: 100%; height: 220px; object-fit: cover; border-radius: 16px; margin-bottom: 16px; }
+.landing-pizza-card div { display: flex; align-items: center; justify-content: space-between; padding: 4px 8px 8px; }
+.landing-pizza-card strong { color: var(--primary); }
+.landing-benefits article > span { font-size: var(--fs-2xl); }
+.landing-testimonials blockquote { margin: 0; }
+.landing-testimonials blockquote strong { display: block; color: var(--primary); margin-top: 14px; }
+.landing-final-cta {
+  max-width: 1200px;
+  margin: 32px auto 72px;
+  padding: 36px 40px;
+  border-radius: var(--radius-2xl);
+  background: linear-gradient(135deg, rgba(238,125,58,.16), var(--bg-card));
+  border: 1px solid rgba(238,125,58,.25);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+.landing-final-cta h2 { margin-top: 6px; }
+
+@media (max-width: 800px) {
+  .landing-three-grid,
+  .landing-pizza-grid,
+  .landing-benefits { grid-template-columns: 1fr; }
+  .landing-final-cta { margin-inline: 24px; flex-direction: column; text-align: center; }
+}
+
+
+.landing-page a:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 3px;
+}
+
+.landing-page .btn {
+  min-height: var(--control-h);
+}
+
+.landing-pizza-card div {
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+@media (max-width: 480px) {
+  .landing-nav { padding-inline: 16px; }
+  .landing-hero { padding-inline: 16px; }
+  .landing-showcase { height: 300px; }
+  .landing-float { max-width: 75%; }
+}

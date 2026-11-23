@@ -4,50 +4,54 @@
 
 /* ── Hero ── */
 .dashboard-hero {
-  text-align: center;
-  padding: 64px 40px;
-  background: linear-gradient(135deg, var(--bg-surface), var(--bg-card));
+  display: flex;
+  align-items: center;
+  min-height: 120px;
+  padding: 28px 32px;
+  margin-bottom: 16px;
+  text-align: left;
+  background:
+    radial-gradient(ellipse 60% 135% at top right, color-mix(in srgb, var(--primary) 14%, transparent), transparent),
+    var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: 28px;
-  margin-bottom: 72px;
+  border-radius: var(--radius-lg);
   position: relative;
   overflow: hidden;
 }
 
-.dashboard-hero::after {
-  content: '';
-  position: absolute;
-  top: -60px;
-  right: -60px;
-  width: 220px;
-  height: 220px;
-  background: radial-gradient(circle, rgba(249,115,22,0.08), transparent 70%);
-  pointer-events: none;
+.dashboard-hero-copy {
+  min-width: 0;
+  padding-inline-end: 120px;
+  overflow-wrap: anywhere;
 }
 
 .dashboard-hero h1 {
-  font-size: 44px;
-  font-weight: 800;
-  letter-spacing: -1.5px;
-  margin-bottom: 12px;
+  font-size: var(--fs-3xl);
+  font-weight: 700;
+  line-height: var(--lh-heading);
+  margin: 0 0 8px;
   color: var(--text-primary);
-  position: relative;
-  z-index: 1;
 }
 
 .dashboard-hero h1 span {
-  background: linear-gradient(135deg, #f97316, #fb923c);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--primary);
 }
 
 .dashboard-hero p {
   color: var(--text-secondary);
-  font-size: 16px;
-  margin-bottom: 36px;
-  position: relative;
-  z-index: 1;
+  font-size: var(--fs-md);
+  font-weight: 400;
+  margin: 0;
+}
+
+.dashboard-hero-pizza {
+  position: absolute;
+  inset-inline-end: 32px;
+  top: 50%;
+  transform: translateY(-50%) rotate(-12deg);
+  color: var(--primary);
+  opacity: 0.25;
+  pointer-events: none;
 }
 
 /* KEY FIX: buttons must be inline, not full width */
@@ -74,11 +78,187 @@
 }
 
 .our-pizzas-section h2 {
-  font-size: 28px;
+  font-size: var(--fs-2xl);
   font-weight: 800;
   text-align: center;
   margin-bottom: 32px;
   color: var(--text-primary);
+}
+
+.our-pizzas-heading {
+  margin-bottom: 32px;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.our-pizzas-heading span {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--primary);
+  font-size: var(--fs-xs);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.our-pizzas-heading h2 {
+  margin: 0;
+  text-align: left;
+  font-size: var(--fs-2xl);
+}
+
+.pizza-filter-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: -8px 0 var(--space-4);
+  font-family: inherit;
+  font-size: var(--fs-md);
+  font-weight: 500;
+  line-height: var(--lh-body);
+}
+
+.pizza-category-chips {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.pizza-filter-chip {
+  flex: 0 0 auto;
+  height: var(--control-h);
+  padding: 0 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  font: inherit;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.pizza-filter-chip.active {
+  border-color: var(--primary);
+  background: var(--primary-glow);
+  color: var(--primary);
+}
+
+.pizza-sort {
+  --sort-accent-text: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+html[data-theme="light"] .pizza-sort {
+  --sort-accent-text: color-mix(in srgb, var(--primary) 50%, var(--text-primary));
+  --sort-option-text: color-mix(in srgb, var(--text-secondary) 94%, var(--text-primary));
+}
+
+.pizza-sort-label {
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.pizza-sort-control {
+  position: relative;
+  width: 240px;
+  min-width: 220px;
+}
+
+.pizza-sort-button {
+  width: 100%;
+  height: var(--control-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  padding: 0 16px;
+  font: inherit;
+  cursor: pointer;
+  box-shadow: none;
+}
+
+.pizza-sort-button:hover,
+.pizza-sort-button:focus-visible,
+.pizza-sort-button[aria-expanded="true"] {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-glow);
+}
+
+.pizza-sort-button:focus-visible {
+  outline: none;
+}
+
+.pizza-sort-arrow {
+  display: block;
+  flex: none;
+  color: var(--text-secondary);
+}
+
+.pizza-sort-menu {
+  position: absolute;
+  z-index: 40;
+  top: calc(100% + 4px);
+  inset-inline-start: 0;
+  width: 100%;
+  min-width: 100%;
+  display: grid;
+  gap: 2px;
+  padding: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.pizza-sort-menu button {
+  width: 100%;
+  height: var(--control-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--sort-option-text, var(--text-secondary));
+  padding: 0 12px;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.pizza-sort-menu button:hover {
+  background: var(--bg-card);
+  color: var(--text-primary);
+}
+
+.pizza-sort-menu button.active {
+  background: color-mix(in srgb, var(--primary) 10%, transparent);
+  color: var(--sort-accent-text);
+}
+
+.pizza-sort-menu button svg {
+  flex: none;
+  color: var(--primary);
+}
+
+.pizza-sort-menu button:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: -2px;
 }
 
 .our-pizzas-grid {
@@ -87,26 +267,214 @@
   gap: 24px;
 }
 
+.pizza-result-count {
+  color: var(--text-secondary);
+  font-size: var(--fs-md);
+  font-weight: 500;
+  line-height: var(--space-6);
+  font-variant-numeric: tabular-nums;
+  margin-bottom: var(--space-4);
+}
+
+.pizza-result-count > span {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.menu-skeleton-img,
+.menu-skeleton-line {
+  background: linear-gradient(90deg, var(--bg-card), var(--bg-surface), var(--bg-card));
+  background-size: 220% 100%;
+  animation: menuSkeletonPulse 1.4s ease-in-out infinite;
+}
+
+.menu-skeleton-img {
+  height: 190px;
+  border-radius: 20px 20px 0 0;
+}
+
+.menu-skeleton-line {
+  height: 12px;
+  border-radius: 999px;
+  margin-bottom: 10px;
+}
+
+.menu-skeleton-line.wide { width: 72%; height: 16px; }
+.menu-skeleton-line.short { width: 45%; }
+
+@keyframes menuSkeletonPulse {
+  0% { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
+
+.menu-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 56px 24px;
+  text-align: center;
+  color: var(--text-secondary);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-xl);
+  background: var(--bg-card);
+}
+
+.menu-empty-state h3 {
+  font-size: var(--fs-lg);
+}
+
+.menu-empty-state p {
+  font-size: var(--fs-sm);
+  margin-bottom: 6px;
+}
+
+.pizza-card-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pizza-category-dot {
+  position: relative;
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--success);
+  border-radius: 3px;
+  background: transparent;
+  flex-shrink: 0;
+}
+
+.pizza-category-dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--success);
+}
+
+.pizza-category-dot.nonveg {
+  border-color: var(--error);
+}
+
+.pizza-category-dot.nonveg::after {
+  background: var(--error);
+}
+
+.topping-more-wrap {
+  display: inline-flex;
+}
+
+.topping-more {
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  padding: 0 8px;
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all var(--t);
+}
+
+.topping-more:hover,
+.topping-more[aria-expanded="true"] {
+  color: var(--primary);
+  border-color: var(--primary);
+  background: var(--primary-glow);
+}
+
+.topping-more:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.topping-popover {
+  position: absolute;
+  z-index: 30;
+  left: 0;
+  bottom: calc(100% + 8px);
+  width: max-content;
+  min-width: 0;
+  max-width: min(220px, 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--bg-card);
+  box-shadow: var(--shadow-md);
+  color: var(--text-secondary);
+  font-size: var(--fs-xs);
+  line-height: var(--lh-body);
+  text-align: left;
+  animation: fadeInUp 0.15s ease;
+}
+
+.topping-popover span {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.our-pizza-card:has(.topping-popover) {
+  position: relative;
+  z-index: 2;
+}
+
+.pizza-add-button {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: transparent;
+}
+
+.pizza-add-button:hover,
+.pizza-add-button.added {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+
+.our-pizza-img-container {
+  background: var(--bg-surface);
+}
+
+.our-pizza-img {
+  opacity: 0.72;
+  filter: blur(8px);
+  transition: opacity 0.25s ease, filter 0.25s ease, transform 0.35s ease;
+}
+
+.our-pizza-img.loaded {
+  opacity: 1;
+  filter: none;
+}
+
 .our-pizza-card {
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: 20px;
-  overflow: hidden;
+  overflow: visible;
   transition: all 0.25s ease;
   display: flex;
   flex-direction: column;
 }
 
 .our-pizza-card:hover {
-  transform: translateY(-8px);
-  border-color: #f97316;
-  box-shadow: 0 20px 48px rgba(249,115,22,0.12);
+  transform: translateY(-2px);
+  border-color: var(--primary);
+  box-shadow: 0 20px 48px color-mix(in srgb, var(--primary) 12%, transparent);
 }
 
 .our-pizza-img-container {
   width: 100%;
   height: 190px;
-  background: linear-gradient(135deg, #f97316, #fb923c);
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  border-radius: 20px 20px 0 0;
   overflow: hidden;
 }
 
@@ -129,7 +497,7 @@
 }
 
 .our-pizza-info h3 {
-  font-size: 17px;
+  font-size: var(--fs-lg);
   font-weight: 700;
   margin-bottom: 10px;
   color: var(--text-primary);
@@ -139,33 +507,34 @@
 
 .our-pizza-price {
   display: inline-block;
-  background: rgba(249,115,22,0.1);
-  color: #f97316;
+  background: color-mix(in srgb, var(--primary) 10%, transparent);
+  color: var(--primary);
   padding: 5px 13px;
   border-radius: 20px;
-  font-size: 14px;
+  font-size: var(--fs-sm);
   font-weight: 700;
-  border: 1px solid rgba(249,115,22,0.2);
+  border: 1px solid color-mix(in srgb, var(--primary) 20%, transparent);
 }
 
 .our-pizza-desc {
   color: var(--text-secondary);
-  font-size: 13px;
-  line-height: 1.5;
+  font-size: var(--fs-sm);
+  line-height: var(--lh-body);
   margin-bottom: 12px;
   flex-grow: 1;
 }
 
 .our-pizza-toppings-title {
-  font-size: 11px;
+  font-size: var(--fs-xs);
   font-weight: 700;
   color: var(--text-secondary);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.04em;
   margin-bottom: 8px;
 }
 
 .our-pizza-toppings {
+  position: relative;
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
@@ -175,10 +544,18 @@
 .topping-tag {
   background: var(--bg-surface);
   color: var(--text-secondary);
-  padding: 4px 9px;
+  padding: 0 8px;
   border-radius: 8px;
-  font-size: 11px;
+  font-size: var(--fs-xs);
   border: 1px solid var(--border);
+}
+
+.topping-tag,
+.topping-more {
+  display: inline-flex;
+  align-items: center;
+  height: 28px;
+  line-height: var(--lh-icon);
 }
 
 .our-pizza-actions { margin-top: auto; }
@@ -195,7 +572,7 @@
 }
 
 .menu-section h2 {
-  font-size: 24px;
+  font-size: var(--fs-xl);
   font-weight: 800;
   margin-bottom: 24px;
   color: var(--text-primary);
@@ -221,38 +598,73 @@
 
 .menu-card:hover {
   transform: translateY(-5px);
-  border-color: #f97316;
-  box-shadow: 0 10px 28px rgba(249,115,22,0.1);
+  border-color: var(--primary);
+  box-shadow: 0 10px 28px color-mix(in srgb, var(--primary) 10%, transparent);
 }
 
 .menu-card-icon {
-  font-size: 48px;
+  font-size: var(--fs-illustration);
   margin-bottom: 10px;
   display: inline-block;
 }
 
 .menu-card h3 {
-  font-size: 14px;
+  font-size: var(--fs-sm);
   font-weight: 700;
   margin-bottom: 6px;
   color: var(--text-primary);
 }
 
 .menu-card p {
-  color: #f97316;
-  font-size: 15px;
+  color: var(--primary);
+  font-size: var(--fs-md);
   font-weight: 700;
 }
 
 @media (max-width: 768px) {
-  .dashboard-hero { padding: 44px 24px; }
-  .dashboard-hero h1 { font-size: 32px; }
+  .our-pizzas-heading {
+    align-items: flex-start;
+  }
+  .pizza-filter-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .pizza-sort {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .pizza-sort-control {
+    width: min(240px, calc(100vw - 104px));
+  }
   .our-pizzas-grid { grid-template-columns: 1fr; }
   .menu-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 12px; }
 }
 
+@media (width < 640px) {
+  .pizza-result-count { font-size: var(--fs-sm); }
+  .pizza-filter-toolbar { font-size: var(--fs-md); }
+  .pizza-category-chips {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .pizza-category-chips::-webkit-scrollbar { display: none; }
+  .pizza-filter-chip { height: var(--control-h); }
+  .pizza-sort-control { flex: 1 1 auto; min-width: 0; }
+  .dashboard-hero { min-height: 0; padding: 20px; }
+  .dashboard-hero-copy { padding-inline-end: 0; }
+  .dashboard-hero h1 { font-size: var(--fs-2xl); }
+  .dashboard-hero p { font-size: var(--fs-sm); }
+  .dashboard-hero-pizza { display: none; }
+}
+
 @media (max-width: 480px) {
-  .dashboard-hero h1 { font-size: 26px; }
+  .our-pizzas-heading {
+    flex-direction: column;
+  }
+  .our-pizzas-heading .btn {
+    width: 100%;
+  }
   .dashboard-cta { flex-direction: column; align-items: stretch; }
   .dashboard-cta .btn { width: 100% !important; }
 }

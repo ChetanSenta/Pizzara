@@ -30,7 +30,7 @@ html[data-theme="light"] .navbar {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 22px;
+  font-size: var(--fs-xl);
   font-weight: 800;
   text-decoration: none;
   flex-shrink: 0;
@@ -38,7 +38,7 @@ html[data-theme="light"] .navbar {
 }
 
 .nav-brand-emoji {
-  font-size: 28px;
+  font-size: var(--fs-2xl);
   display: inline-block;
   transition: transform 0.3s ease;
 }
@@ -52,6 +52,11 @@ html[data-theme="light"] .navbar {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+.nav-brand-icon {
+  color: var(--primary);
+  flex-shrink: 0;
 }
 
 /* ── Center Nav Links ── */
@@ -71,7 +76,7 @@ html[data-theme="light"] .navbar {
   display: block;
   padding: 8px 18px;
   border-radius: 22px;
-  font-size: 14px;
+  font-size: var(--fs-sm);
   font-weight: 600;
   color: var(--text-secondary);
   text-decoration: none;
@@ -102,18 +107,71 @@ html[data-theme="light"] .navbar {
 }
 
 .nav-theme-btn {
-  width: 38px;
-  height: 38px;
+  width: 40px;
+  height: var(--control-h);
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   background: transparent;
-  font-size: 17px;
+  font-size: var(--fs-lg);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease;
   color: var(--text-primary);
+}
+
+.nav-icon-btn {
+  position: relative;
+  width: 40px;
+  height: var(--control-h);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: transparent;
+  color: var(--text-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.nav-icon-btn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: var(--primary-glow);
+  transform: translateY(-1px);
+}
+
+.nav-icon-btn:focus-visible,
+.nav-profile-btn:focus-visible,
+.nav-hamburger:focus-visible,
+.nav-links a:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.nav-cart-count {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  min-width: 18px;
+  height: 18px;
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--bg);
+  border-radius: 999px;
+  background: var(--primary);
+  color: #fff;
+  font-size: var(--fs-xs);
+  font-weight: 800;
+  animation: cartBadgePop 0.22s ease;
+}
+
+@keyframes cartBadgePop {
+  0% { transform: scale(0.7); }
+  70% { transform: scale(1.12); }
+  100% { transform: scale(1); }
 }
 
 .nav-theme-btn:hover {
@@ -152,14 +210,14 @@ html[data-theme="light"] .navbar {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 13px;
+  font-size: var(--fs-sm);
   font-weight: 700;
   color: #fff;
   flex-shrink: 0;
 }
 
 .nav-username {
-  font-size: 13px;
+  font-size: var(--fs-sm);
   font-weight: 600;
   color: var(--text-primary);
   max-width: 110px;
@@ -169,8 +227,13 @@ html[data-theme="light"] .navbar {
 }
 
 .nav-chevron {
-  font-size: 9px;
+  display: block;
   color: var(--text-secondary);
+  transition: transform 0.18s ease;
+}
+
+.nav-chevron.open {
+  transform: rotate(180deg);
 }
 
 /* ── Dropdown Menu ── */
@@ -218,20 +281,20 @@ html[data-theme="light"] .dropdown-header {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 15px;
+  font-size: var(--fs-md);
   font-weight: 700;
   color: #fff;
   flex-shrink: 0;
 }
 
 .dropdown-name {
-  font-size: 14px;
+  font-size: var(--fs-sm);
   font-weight: 700;
   color: var(--text-primary);
 }
 
 .dropdown-email {
-  font-size: 12px;
+  font-size: var(--fs-xs);
   color: var(--text-secondary);
   margin-top: 2px;
   overflow: hidden;
@@ -257,7 +320,7 @@ html[data-theme="light"] .dropdown-divider {
   padding: 12px 16px;
   background: transparent;
   border: none;
-  font-size: 14px;
+  font-size: var(--fs-sm);
   font-weight: 500;
   color: var(--text-primary);
   cursor: pointer;
@@ -275,9 +338,18 @@ html[data-theme="light"] .dropdown-divider {
   color: #ef4444;
 }
 
+.dropdown-logout-icon {
+  flex-shrink: 0;
+  transition: transform 0.15s ease;
+}
+
 .dropdown-logout:hover {
   background: rgba(239, 68, 68, 0.08);
   color: #ef4444;
+}
+
+.dropdown-logout:hover .dropdown-logout-icon {
+  transform: translateX(2px);
 }
 
 /* ── Hamburger ── */
@@ -286,10 +358,10 @@ html[data-theme="light"] .dropdown-divider {
   background: transparent;
   border: 1px solid rgba(255, 255, 255, 0.1);
   color: var(--text-primary);
-  width: 38px;
-  height: 38px;
+  width: 40px;
+  height: 40px;
   border-radius: 10px;
-  font-size: 18px;
+  font-size: var(--fs-lg);
   cursor: pointer;
   align-items: center;
   justify-content: center;
@@ -347,3 +419,31 @@ html[data-theme="light"] .dropdown-divider {
     border-radius: 50%;
   }
 }
+
+@media (max-width: 480px) {
+  .navbar-inner {
+    padding: 0 12px;
+  }
+
+  .nav-right {
+    gap: 6px;
+  }
+
+  .nav-theme-btn,
+  .nav-icon-btn,
+  .nav-hamburger {
+    width: 40px;
+    height: var(--control-h);
+  }
+
+  .nav-profile-btn {
+    padding: 5px;
+  }
+}
+.nav-profile-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+}
+
+.nav-profile-page-backdrop { z-index: 998; }

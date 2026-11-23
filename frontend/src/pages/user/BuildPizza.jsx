@@ -1,7 +1,12 @@
+import { optimizeImage } from '../../utils/optimizeImage';
+import { checkoutTotals } from '../../utils/checkout';
 import { useState, useEffect } from 'react';
+import { Check, Pizza } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { getBases, getSauces, getCheeses, getVeggies, getMeats } from '../../services/api';
-import { toast } from 'react-toastify';
+import { useToast } from '../../context/ToastContext';
+import { useCart } from '../../context/CartContext';
+import PageSkeleton from '../../components/PageSkeleton';
 import './BuildPizza.css';
 
 const steps = [
@@ -12,7 +17,13 @@ const steps = [
   { key: 'review', label: 'Review', icon: '' },
 ];
 
-const PizzaPreview = ({ selection }) => {
+const hideFailedLayer = (event) => {
+  event.currentTarget.hidden = true;
+};
+
+const PizzaPreview = ({ selection, toppingOptions, total }) => {
+  const hasBase = Boolean(selection.base);
+  const toppingCount = selection.veggies.length;
   const CLOUDINARY_BASE = "https://res.cloudinary.com/ddn1qjenm/image/upload/pizzonex/builder";
   
   const format = (name) => {
@@ -33,15 +44,24 @@ const PizzaPreview = ({ selection }) => {
   const veggies = selection.veggies.filter(v => v.category !== 'meat');
   const meats = selection.veggies.filter(v => v.category === 'meat');
 
+  const toppingOrder = new Map(toppingOptions.map((topping, index) => [topping._id, index]));
+  const displayToppings = [...selection.veggies].sort((first, second) =>
+    (toppingOrder.get(first._id) ?? toppingOptions.length)
+    - (toppingOrder.get(second._id) ?? toppingOptions.length)
+  );
+
   return (
     <div className="pizza-preview-card">
-      <div className="pizza-preview-canvas-container">
+      <div className={`pizza-preview-canvas-container${hasBase ? ' has-base' : ''}`}>
         {/* Base Layer */}
         {base[0] && (
           <img
             key={base[0]}
-            src={`${CLOUDINARY_BASE}/bases/${format(base[0])}.png`}
+            src={optimizeImage(`${CLOUDINARY_BASE}/bases/${format(base[0])}.png`, 400)}
             alt="Base"
+            width={150}
+            height={150}
+            onError={hideFailedLayer}
             className="pizza-layer-img pizza-layer-base animate-layer-entry"
           />
         )}
@@ -50,8 +70,11 @@ const PizzaPreview = ({ selection }) => {
         {sauce[0] && (
           <img
             key={sauce[0]}
-            src={`${CLOUDINARY_BASE}/sauces/${format(sauce[0])}.png`}
+            src={optimizeImage(`${CLOUDINARY_BASE}/sauces/${format(sauce[0])}.png`, 400)}
             alt="Sauce"
+            width={150}
+            height={150}
+            onError={hideFailedLayer}
             className="pizza-layer-img pizza-layer-sauce"
           />
         )}
@@ -60,8 +83,11 @@ const PizzaPreview = ({ selection }) => {
         {cheese[0] && (
           <img
             key={cheese[0]}
-            src={`${CLOUDINARY_BASE}/cheese/${format(cheese[0])}.png`}
+            src={optimizeImage(`${CLOUDINARY_BASE}/cheese/${format(cheese[0])}.png`, 400)}
             alt="Cheese"
+            width={150}
+            height={150}
+            onError={hideFailedLayer}
             className="pizza-layer-img pizza-layer-cheese"
           />
         )}
@@ -72,8 +98,11 @@ const PizzaPreview = ({ selection }) => {
           return (
             <img
               key={veg._id}
-              src={`${CLOUDINARY_BASE}/veggies/${format(veg.name)}.png`}
+              src={optimizeImage(`${CLOUDINARY_BASE}/veggies/${format(veg.name)}.png`, 400)}
               alt={veg.name}
+              width={150}
+              height={150}
+              onError={hideFailedLayer}
               className="pizza-layer-img pizza-layer-topping"
             />
           );
@@ -83,15 +112,18 @@ const PizzaPreview = ({ selection }) => {
         {meats.map((m) => (
           <img
             key={m._id}
-            src={`${CLOUDINARY_BASE}/meat/${format(m.name)}.png`}
+            src={optimizeImage(`${CLOUDINARY_BASE}/meat/${format(m.name)}.png`, 400)}
             alt={m.name}
+            width={150}
+            height={150}
+            onError={hideFailedLayer}
             className="pizza-layer-img pizza-layer-topping"
           />
         ))}
 
-        {!base[0] && (
+        {!hasBase && (
           <div className="pizza-preview-empty">
-            <span>🍕</span>
+            <Pizza size={52} strokeWidth={1.4} aria-hidden="true" />
             <p>Choose crust base to start crafting</p>
           </div>
         )}
@@ -99,27 +131,39 @@ const PizzaPreview = ({ selection }) => {
 
       <div className="pizza-visual-legend">
         <div className="legend-title">Crafting Details</div>
-        <div className="legend-row">
-          <span>Base:</span>
-          <strong>{selection.base ? selection.base.name : <em style={{color:'var(--text-muted)'}}>None Selected</em>}</strong>
+        {[
+          ['Base', selection.base],
+          ['Sauce', selection.sauce],
+          ['Cheese', selection.cheese],
+        ].map(([label, item]) => (
+          <div className="legend-row" key={label}>
+            <span className="legend-label">{label}</span>
+            <span className={`legend-name${item ? '' : ' legend-empty'}`} title={item?.name}>
+              {item ? item.name : 'None Selected'}
+            </span>
+            <span className="legend-price">{item && `₹${item.price}`}</span>
+          </div>
+        ))}
+        <div className="legend-row legend-row-toppings">
+          <span className={`legend-label${toppingCount ? ' legend-toppings-heading' : ''}`}>
+            Toppings
+            {toppingCount > 0 && <span className="legend-topping-count">{toppingCount}</span>}
+          </span>
+          {toppingCount === 0 && <span className="legend-name legend-empty">None Selected</span>}
         </div>
-        <div className="legend-row">
-          <span>Sauce:</span>
-          <strong>{selection.sauce ? selection.sauce.name : <em style={{color:'var(--text-muted)'}}>None Selected</em>}</strong>
-        </div>
-        <div className="legend-row">
-          <span>Cheese:</span>
-          <strong>{selection.cheese ? selection.cheese.name : <em style={{color:'var(--text-muted)'}}>None Selected</em>}</strong>
-        </div>
-        <div className="legend-row">
-          <span>Toppings:</span>
-          <strong>
-            {selection.veggies.length > 0 ? (
-              selection.veggies.map(v => v.name).join(', ')
-            ) : (
-              <em style={{color:'var(--text-muted)'}}>None Selected</em>
-            )}
-          </strong>
+        {toppingCount > 0 && (
+          <div className={`legend-topping-list${toppingCount > 6 ? ' is-scrollable' : ''}`}>
+            {displayToppings.map((topping) => (
+              <div className="legend-row legend-topping" key={topping._id}>
+                <span className="legend-name" title={topping.name}>{topping.name}</span>
+                <span className="legend-price">₹{topping.price}</span>
+              </div>
+            ))}
+          </div>
+        )}
+        <div className="legend-total">
+          <span>Running total</span>
+          <strong>₹{total}</strong>
         </div>
       </div>
     </div>
@@ -127,6 +171,8 @@ const PizzaPreview = ({ selection }) => {
 };
 
 const BuildPizza = () => {
+  const toast = useToast();
+  const { addItem } = useCart();
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
   const [options, setOptions] = useState({ bases: [], sauces: [], cheeses: [], veggies: [], meats: [] });
@@ -168,6 +214,13 @@ const BuildPizza = () => {
     return true;
   };
 
+  const nextHint = () => {
+    if (currentStep === 0) return 'Select a base to continue';
+    if (currentStep === 1) return 'Select a sauce to continue';
+    if (currentStep === 2) return 'Select cheese to continue';
+    return '';
+  };
+
   const totalPrice = () => {
     let total = 0;
     if (selection.base) total += selection.base.price;
@@ -176,6 +229,11 @@ const BuildPizza = () => {
     selection.veggies.forEach((v) => (total += v.price));
     return total;
   };
+
+  const customPizzaCharge = 49;
+  const unitPrice = Math.round(totalPrice()) + customPizzaCharge;
+  const { deliveryFee: deliveryCharge, taxes: taxAmount, total: grandTotal } =
+    checkoutTotals([{ unitPrice, quantity: 1 }]);
 
   const handleCheckout = () => {
     // Validate all required fields are selected
@@ -198,11 +256,45 @@ const BuildPizza = () => {
       cheese: selection.cheese.name,
       veggies: selection.veggies.map((v) => v.name),
     };
-    navigate('/checkout', { state: { pizza: pizzaData, totalPrice: totalPrice() } });
+    const items = [{ name: 'Custom Pizza', type: 'custom', pizza: pizzaData, quantity: 1, unitPrice }];
+    navigate('/checkout', { state: { items, priceBreakdown: checkoutTotals(items) } });
+  };
+
+  const handleAddToCart = () => {
+    if (!selection.base || !selection.sauce || !selection.cheese) {
+      toast.error('Complete the pizza before adding it to the cart');
+      return;
+    }
+    const pizzaData = {
+      base: selection.base.name,
+      sauce: selection.sauce.name,
+      cheese: selection.cheese.name,
+      veggies: selection.veggies.map((item) => item.name),
+    };
+    const configKey = [
+      'custom',
+      pizzaData.base,
+      pizzaData.sauce,
+      pizzaData.cheese,
+      ...[...pizzaData.veggies].sort(),
+    ].join('|').toLowerCase();
+    addItem({
+      id: configKey,
+      name: 'Custom Pizza',
+      price: unitPrice,
+      pizza: pizzaData,
+      isCustomPizza: true,
+      customPizzaCharge,
+      priceBreakdown: {
+        pizza: totalPrice(),
+        customPizzaCharge,
+      },
+    });
+    toast.success('Custom pizza added to cart');
   };
 
   const renderOptions = (key, items) => (
-    <div className="options-grid">
+    <div className="options-grid" style={{ '--option-columns': items.length > 5 ? 4 : Math.max(1, items.length) }}>
       {items.map((item) => {
         const isSelected = key === 'veggies'
           ? selection.veggies.some((v) => v._id === item._id)
@@ -210,8 +302,18 @@ const BuildPizza = () => {
         return (
           <div
             key={item._id}
+            role="button"
+            tabIndex={0}
+            aria-pressed={isSelected}
+            aria-label={`${item.name}, ₹${item.price}${isSelected ? ', selected' : ''}`}
             className={`option-card ${isSelected ? (key === 'veggies' ? 'selected-multi' : 'selected') : ''}`}
             onClick={() => handleSelect(key, item)}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                handleSelect(key, item);
+              }
+            }}
           >
             <div className="option-icon">{item.image}</div>
             <div className="option-name">{item.name}</div>
@@ -231,22 +333,35 @@ const BuildPizza = () => {
       case 2:
         return (<div className="step-content"><h2 className="step-title">Select Your Cheese</h2>{renderOptions('cheese', options.cheeses)}</div>);
       case 3:
-        return (<div className="step-content"><h2 className="step-title">Add Toppings (Veggies & Meat)</h2>{renderOptions('veggies', options.veggies)}</div>);
+        return (
+          <div className="step-content">
+            <div className="step-title-row">
+              <h2 className="step-title">Add Toppings (Veggies & Meat)</h2>
+              <span className="selection-count" aria-live="polite">{selection.veggies.length} selected</span>
+            </div>
+            {renderOptions('veggies', options.veggies)}
+          </div>
+        );
       case 4:
         return (
           <div className="step-content">
             <h2 className="step-title">Review Your Pizza</h2>
             <div className="review-card">
-              <div className="review-item"><span className="review-label">Base</span><span className="review-value">{selection.base?.image} {selection.base?.name} <small>₹{selection.base?.price}</small></span></div>
-              <div className="review-item"><span className="review-label">Sauce</span><span className="review-value">{selection.sauce?.image} {selection.sauce?.name} <small>₹{selection.sauce?.price}</small></span></div>
-              <div className="review-item"><span className="review-label">Cheese</span><span className="review-value">{selection.cheese?.image} {selection.cheese?.name} <small>₹{selection.cheese?.price}</small></span></div>
+              <div className="review-item"><span className="review-label">Base</span><span className="review-value">{selection.base?.image} {selection.base?.name} <small>₹{selection.base?.price}</small></span><button type="button" className="review-edit" onClick={() => setCurrentStep(0)}>Edit</button></div>
+              <div className="review-item"><span className="review-label">Sauce</span><span className="review-value">{selection.sauce?.image} {selection.sauce?.name} <small>₹{selection.sauce?.price}</small></span><button type="button" className="review-edit" onClick={() => setCurrentStep(1)}>Edit</button></div>
+              <div className="review-item"><span className="review-label">Cheese</span><span className="review-value">{selection.cheese?.image} {selection.cheese?.name} <small>₹{selection.cheese?.price}</small></span><button type="button" className="review-edit" onClick={() => setCurrentStep(2)}>Edit</button></div>
               <div className="review-item">
                 <span className="review-label">Toppings</span>
                 <div className="veggies-list">
-                  {selection.veggies.length === 0 ? <span style={{color:'var(--text-muted)'}}>None</span> : selection.veggies.map((v) => <span key={v._id} className="veggie-pill">{v.image} {v.name}</span>)}
+                  {selection.veggies.length === 0 ? <span style={{color:'var(--text-secondary)'}}>None</span> : selection.veggies.map((v) => <span key={v._id} className="veggie-pill">{v.image} {v.name} <small>₹{v.price}</small></span>)}
                 </div>
+                <button type="button" className="review-edit" onClick={() => setCurrentStep(3)}>Edit</button>
               </div>
               <div className="review-total"><span>Total</span><span>₹{totalPrice()}</span></div>
+              <div className="review-charge"><span>Custom pizza charge</span><span>₹{customPizzaCharge}</span></div>
+              <div className="review-charge"><span>Delivery charge</span><span>₹{deliveryCharge}</span></div>
+              <div className="review-charge"><span>Taxes (5%)</span><span>₹{taxAmount}</span></div>
+              <div className="review-total review-grand-total"><span>Grand Total</span><span>₹{grandTotal}</span></div>
             </div>
           </div>
         );
@@ -254,7 +369,7 @@ const BuildPizza = () => {
     }
   };
 
-  if (loading) return <div className="page container" style={{display:'flex',justifyContent:'center',alignItems:'center',fontSize:'48px'}}>🍕</div>;
+  if (loading) return <PageSkeleton cards={4} />;
 
   return (
     <div className="build-pizza page container" style={{ paddingTop: '100px' }}>
@@ -264,38 +379,83 @@ const BuildPizza = () => {
 
       <div className="progress-bar">
         {steps.map((step, i) => (
-          <div key={step.key} className={`progress-step ${i === currentStep ? 'active' : ''} ${i < currentStep ? 'done' : ''}`}>
-            <span className="progress-step-num">{i < currentStep ? '✓' : i + 1}</span>
+          <button
+            type="button"
+            key={step.key}
+            className={`progress-step ${i === currentStep ? 'active' : ''} ${i < currentStep ? 'done' : ''}`}
+            onClick={() => i <= currentStep && setCurrentStep(i)}
+            disabled={i > currentStep}
+            aria-current={i === currentStep ? 'step' : undefined}
+            aria-label={`Step ${i + 1}: ${step.label}${i < currentStep ? ' (completed)' : i === currentStep ? ' (current)' : ''}`}
+            title={i < currentStep ? `Go back to ${step.label}` : undefined}
+          >
+            <span className="progress-step-num">{i < currentStep ? <Check size={15} aria-hidden="true" /> : i + 1}</span>
             <span>{step.icon} {step.label}</span>
-          </div>
+          </button>
         ))}
       </div>
 
       <div className="builder-layout-grid">
         {/* Left column: dynamic layered preview */}
-        <PizzaPreview selection={selection} />
+        <div className="builder-preview-column">
+          <PizzaPreview selection={selection} toppingOptions={options.veggies} total={totalPrice()} />
+        </div>
 
         {/* Right column: controls */}
         <div className="builder-controls-column">
           {renderStep()}
 
-          <div className="step-nav">
-            {currentStep > 0 && (
-              <button className="btn btn-secondary" onClick={() => setCurrentStep((p) => p - 1)}>← Back</button>
-            )}
-            {currentStep < 4 ? (
-              <button className="btn btn-primary" disabled={!canProceed()} onClick={() => setCurrentStep((p) => p + 1)}>
-                Next →
-              </button>
-            ) : (
-              <button 
-                className="btn btn-primary btn-lg" 
-                onClick={handleCheckout}
-                disabled={!selection.base || !selection.sauce || !selection.cheese}
-              >
-              Proceed to Checkout →
-              </button>
-            )}
+          <div className={`builder-action-bar${currentStep < 3 ? ' builder-action-bar-short' : ''}`}>
+            <div className="builder-action-total">
+              <span>Running total</span>
+              <strong>₹{totalPrice()}</strong>
+            </div>
+            <div className={`step-nav${currentStep === 4 ? ' step-nav-review' : ''}`}>
+              {currentStep > 0 && (
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={() => setCurrentStep((p) => p - 1)}
+                  aria-label="Go back to the previous step"
+                >
+                  ← Back
+                </button>
+              )}
+              {currentStep < 4 && !canProceed() && (
+                <p className="step-next-hint" id="step-next-hint">{nextHint()}</p>
+              )}
+              {currentStep < 4 ? (
+                <button
+                  type="button"
+                  className="btn btn-primary step-next"
+                  disabled={!canProceed()}
+                  title={!canProceed() ? nextHint() : undefined}
+                  aria-describedby={!canProceed() ? 'step-next-hint' : undefined}
+                  onClick={() => setCurrentStep((p) => p + 1)}
+                >
+                  Next →
+                </button>
+              ) : (
+                <div className="step-review-actions">
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    onClick={handleAddToCart}
+                    disabled={!selection.base || !selection.sauce || !selection.cheese}
+                  >
+                    Add to Cart
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-primary btn-lg"
+                    onClick={handleCheckout}
+                    disabled={!selection.base || !selection.sauce || !selection.cheese}
+                  >
+                    Proceed to Checkout →
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>

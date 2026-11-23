@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
+const rateLimit = require('express-rate-limit');
 
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/auth');
@@ -15,11 +16,27 @@ const app = express();
 app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
 
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 30,
+  // Refreshing an authenticated session should not consume the sign-in budget.
+  skip: (req) => req.method === 'GET' && req.path === '/me',
+  standardHeaders: 'draft-7',
+  legacyHeaders: false,
+});
+
+const paymentLimiter = rateLimit({
+  windowMs: 10 * 60 * 1000,
+  limit: 20,
+  standardHeaders: 'draft-7',
+  legacyHeaders: false,
+});
+
 // Routes
-app.use('/api/auth', authRoutes);
+app.use('/api/auth', authLimiter, authRoutes);
 app.use('/api/pizza', pizzaRoutes);
 app.use('/api/orders', orderRoutes);
-app.use('/api/payment', paymentRoutes);
+app.use('/api/payment', paymentLimiter, paymentRoutes);
 app.use('/api/inventory', inventoryRoutes);
 
 // Health check
@@ -42,10 +59,6 @@ const start = async () => {
   
   const invCount = await Inventory.countDocuments();
   if (invCount === 0) {
-    // COMMENTED OUT: This file likely contains a separate app.listen() or connection hook 
-    // that conflicts with this server instance during watches/restarts.
-    // const seed = require('./seed/seed');
-    
     const items = [
       { category: 'base', name: 'Thin Crust', quantity: 100, price: 120, image: '🫓' },
       { category: 'base', name: 'Thick Crust', quantity: 100, price: 140, image: '🍞' },

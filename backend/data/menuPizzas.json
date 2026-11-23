@@ -1,0 +1,137 @@
+[
+  {
+    "name": "Margherita Classic",
+    "base": "Thin Crust",
+    "sauce": "Marinara",
+    "cheese": "Mozzarella",
+    "unitPrice": 299,
+    "veggies": [
+      "Tomatoes"
+    ]
+  },
+  {
+    "name": "Veggie Supreme",
+    "base": "Whole Wheat",
+    "sauce": "Pesto",
+    "cheese": "Parmesan",
+    "unitPrice": 349,
+    "veggies": [
+      "Mushrooms",
+      "Olives",
+      "Tomatoes",
+      "Bell Peppers"
+    ]
+  },
+  {
+    "name": "BBQ Chicken Delight",
+    "base": "Stuffed Crust",
+    "sauce": "BBQ",
+    "cheese": "Mozzarella",
+    "unitPrice": 429,
+    "veggies": [
+      "Chicken",
+      "Onions",
+      "Jalapeños"
+    ]
+  },
+  {
+    "name": "Four Cheese Delight",
+    "base": "Thin Crust",
+    "sauce": "Alfredo",
+    "cheese": "Mozzarella",
+    "unitPrice": 449,
+    "veggies": []
+  },
+  {
+    "name": "Spicy Paneer",
+    "base": "Whole Wheat",
+    "sauce": "Hot Sauce",
+    "cheese": "Cheddar",
+    "unitPrice": 389,
+    "veggies": [
+      "Bell Peppers",
+      "Onions"
+    ]
+  },
+  {
+    "name": "Chicken Tikka",
+    "base": "Stuffed Crust",
+    "sauce": "BBQ",
+    "cheese": "Mozzarella",
+    "unitPrice": 459,
+    "veggies": [
+      "Chicken",
+      "Bell Peppers",
+      "Onions"
+    ]
+  },
+  {
+    "name": "Mexican Heat",
+    "base": "Thin Crust",
+    "sauce": "Hot Sauce",
+    "cheese": "Cheddar",
+    "unitPrice": 369,
+    "veggies": [
+      "Corn",
+      "Jalapeños",
+      "Onions"
+    ]
+  },
+  {
+    "name": "Pesto Garden",
+    "base": "Whole Wheat",
+    "sauce": "Pesto",
+    "cheese": "Parmesan",
+    "unitPrice": 399,
+    "veggies": [
+      "Spinach",
+      "Mushrooms",
+      "Tomatoes"
+    ]
+  },
+  {
+    "name": "Bacon Lovers",
+    "base": "Thick Crust",
+    "sauce": "BBQ",
+    "cheese": "Cheddar",
+    "unitPrice": 469,
+    "veggies": [
+      "Bacon",
+      "Sausage"
+    ]
+  },
+  {
+    "name": "Classic Pepperoni",
+    "base": "Thin Crust",
+    "sauce": "Marinara",
+    "cheese": "Mozzarella",
+    "unitPrice": 419,
+    "veggies": [
+      "Pepperoni"
+    ]
+  },
+  {
+    "name": "Jain Pizza",
+    "base": "Thin Crust",
+    "sauce": "Marinara",
+    "cheese": "Mozzarella",
+    "unitPrice": 359,
+    "veggies": [
+      "Corn",
+      "Bell Peppers",
+      "Olives"
+    ]
+  },
+  {
+    "name": "Farmhouse",
+    "base": "Thick Crust",
+    "sauce": "Marinara",
+    "cheese": "Mozzarella",
+    "unitPrice": 379,
+    "veggies": [
+      "Mushrooms",
+      "Tomatoes",
+      "Bell Peppers"
+    ]
+  }
+]

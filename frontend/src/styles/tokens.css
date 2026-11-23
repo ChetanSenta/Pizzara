@@ -1,0 +1,54 @@
+:root {
+  --color-primary: #ee7d3a;
+  --color-primary-light: #fb923c;
+  --color-primary-dark: #c95f24;
+  --color-primary-glow: rgba(238, 125, 58, 0.18);
+  --color-bg: #0f0f14;
+  --color-card: #17171f;
+  --color-surface: #1e1e28;
+  --color-border: rgba(255, 255, 255, 0.07);
+  --color-text: #f1f1f3;
+  --color-text-muted: #9a9aaa;
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-pill: 999px;
+  --shadow-sm: 0 6px 18px rgba(0, 0, 0, 0.16);
+  --shadow-md: 0 16px 40px rgba(0, 0, 0, 0.24);
+  --shadow-primary: 0 12px 30px rgba(238, 125, 58, 0.22);
+  --fs-xs: 0.8125rem;
+  --fs-sm: 0.9375rem;
+  --fs-md: 1rem;
+  --fs-lg: 1.125rem;
+  --fs-xl: 1.375rem;
+  --fs-2xl: 1.75rem;
+  --fs-3xl: 2.25rem;
+  --fs-4xl: clamp(2.5rem, 5vw, 4rem);
+  --fs-illustration: 4.5rem;
+  --lh-body: 1.5;
+  --lh-heading: 1.35;
+  --lh-number: 1.1;
+  --lh-icon: 1;
+  --control-h: 2.75rem;
+  --control-h-sm: 2.25rem;
+  --page-max-width: 75rem;
+  --page-gutter: var(--space-6);
+  --transition: 0.2s ease;
+}
+
+@media (max-width: 640px) {
+  :root { --page-gutter: var(--space-4); }
+}
