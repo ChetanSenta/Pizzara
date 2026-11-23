@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🍕 Pizzara — Pizza Store Ordering & Management
+# <img src="frontend/public/pizzara-logo.svg" width="32" height="32" alt=""> Pizzara — Pizza Store Ordering & Management
 
 **OIBSIP Web Development & Designing | Level 3 – Final Task**
 
